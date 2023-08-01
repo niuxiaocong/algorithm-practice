@@ -2,23 +2,33 @@ package com.tixi.algorithm.course04;
 
 public class Code01_reverseLinkedList {
     public static void main(String[] args) {
-        Node root  = new Node(1);
-        Node node1  = new Node(2);
-        Node node2  = new Node(3);
-        root.next = node1;
-        node1.next = node2;
+        ListNode root = new ListNode(1);
+        ListNode ListNode1 = new ListNode(2);
+        ListNode ListNode2 = new ListNode(3);
+        ListNode ListNode3 = new ListNode(4);
+        ListNode ListNode4 = new ListNode(5);
 
+        root.next = ListNode1;
+        ListNode1.next = ListNode2;
+        ListNode2.next = ListNode3;
+        ListNode3.next = ListNode4;
 
-        Node nodeNew = reverse(root);
+        ListNode head = reverseSingleList(root);
 
+        while(head !=null){
+            System.out.println(head.val);
+            head = head.next;
+        }
 
-        System.out.println(nodeNew.val);
     }
 
-    public static Node reverse(Node head){
-        Node pre = null;
-        Node next = null;
-        while (head!=null){
+    public static ListNode reverseSingleList(ListNode head){
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode next = null;
+        ListNode pre = null;
+        while(head!=null){
             next = head.next;
             head.next = pre;
             pre = head;
@@ -27,21 +37,16 @@ public class Code01_reverseLinkedList {
         return pre;
     }
 
-
-    public static class Node{
+    public static class ListNode{
         int val;
-        Node next;
-
-        public Node() {
-        }
-
-        public Node(int val) {
+        ListNode next;
+        public ListNode(int val) {
             this.val = val;
         }
-
-        public Node(int val, Node next) {
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
     }
 }
+
