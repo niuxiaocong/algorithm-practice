@@ -19,12 +19,12 @@ public class Code01_TreeMaxWidth {
         System.out.println(maxWidthMap(root));
     }
 
-    public static int maxWidthMap(TreeNode head){
+    public static int maxWidthMap(TreeNode head) {
         if (head == null) {
             return 0;
         }
         // 用来记录当前节点在那一层
-        Map<TreeNode,Integer> levelMap = new HashMap();
+        Map<TreeNode, Integer> levelMap = new HashMap();
         levelMap.put(head, 1);
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(head);
@@ -35,25 +35,25 @@ public class Code01_TreeMaxWidth {
         int currentLevelNodes = 1;
         int max = 0;
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             // 获取当前几点在第几层
             Integer curNodeLevel = levelMap.get(node);
-            if (node.left!=null) {
-                levelMap.put(node.left,curNodeLevel+1);
+            if (node.left != null) {
+                levelMap.put(node.left, curNodeLevel + 1);
                 queue.add(node.left);
             }
-            if (node.right!=null){
-                levelMap.put(node.right,curNodeLevel+1);
+            if (node.right != null) {
+                levelMap.put(node.right, curNodeLevel + 1);
                 queue.add(node.right);
             }
 
             // 当前节点所在层和当前层相等
             if (curNodeLevel == currentLevel) {
-                max = Math.max(max,currentLevelNodes);
+                max = Math.max(max, currentLevelNodes);
                 currentLevel++;
                 currentLevelNodes = 1;
-            }else {
+            } else {
                 currentLevelNodes++;
             }
         }
