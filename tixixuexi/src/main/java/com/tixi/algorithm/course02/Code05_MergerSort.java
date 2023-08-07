@@ -3,9 +3,11 @@ package com.tixi.algorithm.course02;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Code03_SelectSort {
+/**
+ * 归并排序
+ */
+public class Code05_MergerSort {
     public static void main(String[] args) {
-
         int times = 5000;
         int min = -100;
         int max = 100;
@@ -14,14 +16,14 @@ public class Code03_SelectSort {
         for (int i = 0; i <= times; i++) {
             int[] arr = generArr(len, max, min);
             int[] copyarr = copy(arr);
-            selectSort(arr);
+            mergerSort(arr);
             Arrays.sort(copyarr);
             for (int j=0;j<len;j++){
                 if (arr[j]!=copyarr[j]){
                     isRight = false;
                 }
                 if (!isRight){
-                    System.out.println("出错啦！" + Arrays.toString(arr));
+                    System.out.println("出错啦！" + arr.toString());
                     return;
                 }
             }
@@ -31,7 +33,48 @@ public class Code03_SelectSort {
         }
     }
 
-    //for test
+    // 归并函数
+    public static void mergerSort(int[] arr){
+        if (arr == null || arr.length<2){
+            return;
+        }
+        process(arr,0,arr.length-1);
+    }
+
+    // 递归函数
+    public static void process(int[] arr, int L, int R){
+        if (L == R) {
+            return;
+        }
+        int mid = L + ((R - L) >> 1);
+        process(arr, L,mid);
+        process(arr,mid+1,R);
+        merger(arr,L,mid,R);
+    }
+
+    private static void merger(int[] arr, int left, int mid, int right) {
+        int[] help = new int[right-left+1];
+        int p1 = left;
+        int p2 = mid+1;
+        int index = 0;
+        while(p1<=mid && p2<=right){
+            help[index++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+        }
+
+        while(p1 <= mid){
+            help[index++] = arr[p1++];
+        }
+
+        while(p2<=right){
+            help[index++] = arr[p2++];
+        }
+
+        for (int i=0 ; i<help.length ; i++){
+            arr[left + i] = help[i];
+        }
+    }
+
+    // for test
     public static int[] copy(int[] arr){
         if (arr == null || arr.length == 0){
             return new int[0];
@@ -52,25 +95,5 @@ public class Code03_SelectSort {
         return arr;
     }
 
-    public static void selectSort(int[] arr) {
-        if (arr == null || arr.length == 0){
-            return;
-        }
-        for (int i=0;i<arr.length-1;i++){
-            int minIndex = i;
-            //因为需要比较所有的数，所以是<=
-            for (int j=i+1;j<=arr.length-1;j++){
-                if (arr[j] < arr[minIndex]){
-                    minIndex = j;
-                }
-            }
-            swap(arr,minIndex,i);
-        }
-    }
 
-    public static void swap(int[] arr , int i , int j){
-        int temp =  arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
 }

@@ -24,6 +24,9 @@ public class Code01_BubbleSort {
                 }
             }
         }
+        if (isRight) {
+            System.out.println("finish");
+        }
     }
 
     public static int[] copy(int[] arr){
